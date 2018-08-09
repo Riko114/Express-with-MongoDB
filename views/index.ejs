@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>聊天室</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/locale/zh-tw.js'></script>
+  </head>
+  <body>
+    <div class="outerFrame">
+      <div class="clientChat">
+        <div class="content">
+          <span class="name"></span>
+          <span class="msg"></span>
+        </div>
+          <span class="time"></span>
+      </div>
+    </div>
+    <div class="message">
+      <input type="text" id="name" placeholder="暱稱">
+      <input type="text" id="msg"  placeholder="訊息內容">
+      <button type="button" class="button">送出</button>
+    </div>
+  </body>
+</html>
+
+<script> 
+  socket = io.connect('ws://localhost:3001');
+
+  $(document).ready(function(){
+
+    //卷動
+    function scroll() {
+    let scroll = document.querySelector('.outerFrame');
+    scroll.scrollTo(0, scroll.scrollHeight);
+    }
+
+    //接收訊息後取代
+    socket.on('server', function(obj) {
+        let name = obj.name;
+        let msg = obj.msg;
+        let time = obj.time;
+
+        let html = `<div class="clientChat">
+                       <div class="content">
+                          <span class="name">${name}: </span>
+                          <span class="msg">${msg}</span>
+                       </div>
+                          <span class="time">${moment(time).fromNow()}</span>
+                    </div>`;
+                 
+        $(".outerFrame").append(html);
+        scroll();
+    });
+
+    //傳送訊息
+    $( ".button" ).click(function() {
+
+        //檢測輸入是否為空值
+        if($('#name').val() == '' || $('#msg').val() == '') {
+          alert("名稱或內容不得為空");
+          return;
+        }
+
+        let name = $('#name').val();
+        let msg = $('#msg').val();
+
+        let data = {
+             name:name,
+             msg:msg,
+        };
+
+        socket.emit('client', data);
+        $('#msg').empty();
+    });
+});
+</script>

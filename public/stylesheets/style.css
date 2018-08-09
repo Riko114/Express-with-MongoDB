@@ -1,0 +1,53 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.outerFrame {
+  padding: 5px 5px;
+  width: 700px;
+  overflow-y: scroll;
+  border-style:double;
+  height: 300px;
+  
+}
+
+
+.outerFrame .clientChat {
+  display: flex;
+  margin: 5px 0;
+}
+
+.outerFrame .clientChat .content {
+  display: inherit;
+}
+
+.outerFrame .clientChat .time {
+  padding-left: 40px;
+  font-size: 10px;
+  color: #aaa;
+}
+
+.message {
+  margin-top: 5px;
+}
+
+.message button {
+  height: 29px;
+  width: 100px;
+}
+
+.message input {
+  padding: 0 5px;
+  height: 25px;
+  width: 490px;
+}
+
+.message input:first-child {
+  width: 90px;
+}
+
