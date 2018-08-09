@@ -16,14 +16,14 @@
 + MongoDB
 
 ##下載
-``bash
-下載 ZIP 包或 clone
+```bash
+clone or download ZIP
 ```
 
-``bash
+```bash
 cd 專案名稱
 ```
 
-``bash
+```bash
 npm install
 ```
